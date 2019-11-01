@@ -16,7 +16,7 @@ return array (
   'categorytype' => 
   array (
     'product' => 'Product',
-    'blog' => 'blog',
+    'blog' => 'Blog',
   ),
   'configgroup' => 
   array (
