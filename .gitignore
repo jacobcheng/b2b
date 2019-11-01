@@ -3,6 +3,7 @@
 /addons/*
 /public/theme/*
 /public/uploads/*
+/public/.user.ini
 .idea
 composer.lock
 *.log
