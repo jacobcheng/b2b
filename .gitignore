@@ -1,0 +1,13 @@
+/nbproject/
+/runtime/*
+/addons/*
+/public/theme/*
+/public/uploads/*
+.idea
+composer.lock
+*.log
+*.css.map
+!.gitkeep
+.env
+.svn
+.vscode
