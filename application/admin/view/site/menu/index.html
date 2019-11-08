@@ -1,0 +1,117 @@
+<div class="col-xs-12 col-sm-4 no-padding">
+    <div class="box box-widget">
+        <div class="box-header with-border">
+            <h3 class="box-title">{:__('Add')}</h3>
+        </div>
+        <div class="box-body">
+            <form id="add-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="site/menu/add">
+
+                <div class="form-group">
+                    <label class="control-label col-xs-12 col-sm-2">{:__('Type')}:</label>
+                    <div class="col-xs-12 col-sm-8">
+                        <select id="c-type" data-rule="required" class="form-control selectpicker" name="row[type]" type="text">
+                            {foreach name='site.menu' item='vo'}
+                            <option value="{$key}">{$vo}</option>
+                            {/foreach}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="c-menu_type" class="control-label col-xs-12 col-sm-2">{:__('Menu Type')}:</label>
+                    <div class="col-xs-12 col-sm-8">
+                        <select id="c-menu_type" data-rule="required" class="form-control selectpicker" name="row[menu_type]" type="text">
+                            <option value="page">{:__('Page')}</option>
+                            <option value="blog">{:__('Blog Category')}</option>
+                            <option value="product">{:__('Product Category')}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-12 col-sm-2">{:__('Pid')}:</label>
+                    <div class="col-xs-12 col-sm-8">
+                        <input id="c-pid" data-rule="" data-source="site/menu/index" class="form-control selectpage" name="row[pid]" type="text" value="" placeholder="{:__('None')}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12 col-sm-offset-2 col-sm-8">
+                        <input id="c-menu_id" data-rule="required" class="form-control selectpage" data-source="site/menu/getmenuitemid" data-order-by="id" name="row[menu_id]" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-12 col-sm-2">{:__('Name')}:</label>
+                    <div class="col-xs-12 col-sm-8">
+                        <input id="c-name" data-rule="required" class="form-control" name="row[name]" type="text" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-12 col-sm-2">{:__('Weigh')}:</label>
+                    <div class="col-xs-12 col-sm-8">
+                        <input id="c-weigh" data-rule="required" class="form-control" name="row[weigh]" type="number" min="0" step="1" value="0">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-xs-12 col-sm-2">{:__('Status')}:</label>
+                    <div class="col-xs-12 col-sm-8">
+
+                        <div class="radio">
+                            {foreach name="statusList" item="vo"}
+                            <label for="row[status]-{$key}"><input id="row[status]-{$key}" name="row[status]" type="radio" value="{$key}" {in name="key" value="normal"}checked{/in} /> {$vo}</label>
+                            {/foreach}
+                        </div>
+
+                    </div>
+                </div>
+                <div class="form-group layer-footer">
+                    <label class="control-label col-xs-12 col-sm-2"></label>
+                    <div class="col-xs-12 col-sm-8">
+                        <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+                        <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="col-xs-12 col-sm-8">
+    <div class="panel panel-default panel-intro">
+        <div class="panel-heading">
+            {:build_heading(null,FALSE)}
+            <ul class="nav nav-tabs" data-field="type">
+                {foreach name="site.menu" item="vo"}
+                <li {eq name="key" value="main"}class="active"{/eq}><a href="#t-{$key}" data-value="{$key}" data-toggle="tab">{$vo}</a></li>
+                {/foreach}
+            </ul>
+        </div>
+        <div class="panel-body">
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade active in" id="one">
+                    <div class="widget-body no-padding">
+                        <div id="toolbar" class="toolbar">
+                            <a href="javascript:;" class="btn btn-primary btn-refresh" title="{:__('Refresh')}" ><i class="fa fa-refresh"></i> </a>
+                            <a href="javascript:;" class="btn btn-success btn-add {:$auth->check('site/menu/add')?'':'hide'}" title="{:__('Add')}" ><i class="fa fa-plus"></i> {:__('Add')}</a>
+                            <a href="javascript:;" class="btn btn-success btn-edit btn-disabled disabled {:$auth->check('site/menu/edit')?'':'hide'}" title="{:__('Edit')}" ><i class="fa fa-pencil"></i> {:__('Edit')}</a>
+                            <a href="javascript:;" class="btn btn-danger btn-del btn-disabled disabled {:$auth->check('site/menu/del')?'':'hide'}" title="{:__('Delete')}" ><i class="fa fa-trash"></i> {:__('Delete')}</a>
+                            <a href="javascript:;" class="btn btn-danger btn-import {:$auth->check('site/menu/import')?'':'hide'}" title="{:__('Import')}" id="btn-import-file" data-url="ajax/upload" data-mimetype="csv,xls,xlsx" data-multiple="false"><i class="fa fa-upload"></i> {:__('Import')}</a>
+
+                            <div class="dropdown btn-group {:$auth->check('site/menu/multi')?'':'hide'}">
+                                <a class="btn btn-primary btn-more dropdown-toggle btn-disabled disabled" data-toggle="dropdown"><i class="fa fa-cog"></i> {:__('More')}</a>
+                                <ul class="dropdown-menu text-left" role="menu">
+                                    <li><a class="btn btn-link btn-multi btn-disabled disabled" href="javascript:;" data-params="status=normal"><i class="fa fa-eye"></i> {:__('Set to normal')}</a></li>
+                                    <li><a class="btn btn-link btn-multi btn-disabled disabled" href="javascript:;" data-params="status=hidden"><i class="fa fa-eye-slash"></i> {:__('Set to hidden')}</a></li>
+                                </ul>
+                            </div>
+
+
+                        </div>
+                        <table id="table" class="table table-striped table-bordered table-hover table-nowrap"
+                               data-operate-edit="{:$auth->check('site/menu/edit')}"
+                               data-operate-del="{:$auth->check('site/menu/del')}"
+                               width="100%">
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,182 @@
+<style type="text/css">
+    .plupload-preview a img {
+        height: auto;
+    }
+    .plupload-preview a:first-child {
+        height: auto;
+    }
+    .plupload-preview li {
+        width: 100%;
+    }
+</style>
+<div class="panel panel-default panel-intro">
+    {:build_heading()}
+
+    <div class="panel-body">
+        <form id="edit-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+            <input id="c-id" data-rule="required" class="hidden" name="row[id]" value="{$row.id|htmlentities}">
+            <div class="col-xs-12 col-sm-4 no-padding">
+                <div class="box box-widget">
+                    <div class="box-header with-border">
+                        <div class="box-title">
+                            <span>{:__('Banner Setting')}</span>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">{:__('Name')}:</label>
+                            <div class="col-xs-12 col-sm-8">
+                                <input id="c-name" data-rule="required" class="form-control" name="row[name]" type="text" value="{$row.name|htmlentities}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">{:__('Language')}:</label>
+                            <div class="col-xs-12 col-sm-8">
+                                <select id="c-language" data-rule="required" class="form-control selectpicker" name="row[images][language]" type="text">
+                                    {foreach name="site.multi_lang" item="vo"}
+                                    <option value="{$key}" {eq name="key" value=":getDefaultLanguage()"}selected{/eq}>{$vo}</option>
+                                    {/foreach}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">{:__('Width')}:</label>
+                            <div class="col-xs-12 col-sm-8">
+
+                                <select  id="c-width" data-rule="required" class="form-control selectpicker" name="row[width]">
+                                    {foreach name="widthList" item="vo"}
+                                    <option value="{$key}" {in name="key" value="$row.width"}selected{/in}>{$vo}</option>
+                                    {/foreach}
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">{:__('Height')}:</label>
+                            <div class="col-xs-12 col-sm-8">
+                                <input id="c-height" data-rule="required" class="form-control" name="row[height]" type="text" value="{$row.height|htmlentities}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-7 col-sm-offset-1 no-padding">
+                <div class="box box-widget">
+                    <div class="box-body">
+                        <button id="addImage" type="button" class="btn btn-success">{:__('Add')}</button>
+                    </div>
+                </div>
+                {foreach name="row.images" item="vo"}
+                <div class="box box-widget">
+                    <div class="box-header with-border">
+                        <div class="box-title">
+                            <span>{:__('Image')} {:count($row.images) - $key}</span>
+                        </div>
+                        <div class="box-tools">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <div class="input-group">
+                                    <input id="c-images-{$key}-url" data-rule="required" class="form-control" size="50" name="row[images][{$key}][url]" type="text" value="{$vo.url|htmlentities}" placeholder="{:__('Image')}" readonly>
+                                    <div class="input-group-addon no-border no-padding">
+                                        <span><button type="button" id="plupload-image-{$key}" class="btn btn-danger plupload" data-input-id="c-images-{$key}-url" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-image-{$key}"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
+                                        <span><button type="button" id="fachoose-image-{$key}" class="btn btn-primary fachoose" data-input-id="c-images-{$key}-url" data-mimetype="image/*" data-multiple="false"><i class="fa fa-list"></i> {:__('Choose')}</button></span>
+                                    </div>
+                                    <span class="msg-box n-right" for="c-images-{$key}-url"></span>
+                                </div>
+                                <ul class="row list-inline plupload-preview" id="p-image-{$key}"></ul>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">{:__('Title')}:</label>
+                            <div class="col-xs-12 col-sm-10">
+                                <input id="c-images-{$key}-title" class="form-control" name="row[images][{$key}][title]" type="text" value="{$vo.title|htmlentities}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">{:__('Tagline')}:</label>
+                            <div class="col-xs-12 col-sm-10">
+                                <input id="c-images-{$key}-tagline" class="form-control" name="row[images][{$key}][tagline]" type="text" value="{$vo.tagline|htmlentities}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">{:__('Alt')}:</label>
+                            <div class="col-xs-12 col-sm-10">
+                                <input id="c-images-{$key}-alt" data-rule="required" class="form-control" name="row[images][{$key}][alt]" type="text" value="{$vo.title|htmlentities}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">{:__('Weigh')}:</label>
+                            <div class="col-xs-12 col-sm-10">
+                                <input id="c-images-{$key}-weigh" data-rule="required" class="form-control" name="row[images][{$key}][weigh]" type="number" min="0" step="1" value="{$vo.weigh|htmlentities}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/foreach}
+            </div>
+            <div class="form-group layer-footer">
+                <label class="control-label col-xs-12"></label>
+                <div class="col-xs-12">
+                    <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+                    <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/html" id="image_template">
+    <div class="box box-widget">
+        <div class="box-header with-border">
+            <div class="box-title">
+                <span>{:__('Image')} <%=num%></span>
+            </div>
+            <div class="box-tools">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <div class="input-group">
+                        <input id="c-images-<%=index%>-url" class="form-control" size="50" name="row[images][<%=index%>][url]" type="text" value="<%=data.url%>" placeholder="{:__('Image')}" readonly>
+                        <div class="input-group-addon no-border no-padding">
+                            <span><button type="button" id="plupload-image-<%=index%>" class="btn btn-danger plupload" data-input-id="c-images-<%=index%>-url" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-image-<%=index%>"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
+                            <span><button type="button" id="fachoose-image-<%=index%>" class="btn btn-primary fachoose" data-input-id="c-images-<%=index%>-url" data-mimetype="image/*" data-multiple="false"><i class="fa fa-list"></i> {:__('Choose')}</button></span>
+                        </div>
+                        <span class="msg-box n-right" for="c-images-<%=index%>-url"></span>
+                    </div>
+                    <ul class="row list-inline plupload-preview" id="p-image-<%=index%>"></ul>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-12 col-sm-2">{:__('Title')}:</label>
+                <div class="col-xs-12 col-sm-10">
+                    <input id="c-images-<%=index%>-title" class="form-control" name="row[images][<%=index%>][title]" type="text" value="<%=data.title%>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-12 col-sm-2">{:__('Tagline')}:</label>
+                <div class="col-xs-12 col-sm-10">
+                    <input id="c-images-<%=index%>-tagline" class="form-control" name="row[images][<%=index%>][tagline]" type="text" value="<%=data.tagline%>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-12 col-sm-2">{:__('Alt')}:</label>
+                <div class="col-xs-12 col-sm-10">
+                    <input id="c-images-<%=index%>-alt" class="form-control" name="row[images][<%=index%>][alt]" type="text" value="<%=data.alt%>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-12 col-sm-2">{:__('Weigh')}:</label>
+                <div class="col-xs-12 col-sm-10">
+                    <input id="c-images-<%=index%>-weigh" class="form-control" name="row[images][<%=index%>][weigh]" type="text" value="<%=num%>">
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

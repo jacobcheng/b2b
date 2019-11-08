@@ -1,0 +1,169 @@
+<style type="text/css">
+    .plupload-preview a img {
+        height: auto;
+    }
+    .plupload-preview a:first-child {
+        height: auto;
+    }
+    .plupload-preview li {
+        width: 100%;
+    }
+</style>
+<div class="panel panel-default panel-intro">
+    {:build_heading()}
+
+    <div class="panel-body">
+        <form id="add-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+            <div class="col-xs-12 col-sm-7 no-padding">
+                <div class="box box-widget">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <input id="c-title" data-rule="required" class="form-control" name="row[content][title]" type="text" placeholder="{:__('Title')}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <input id="c-slug" data-rule="required" class="form-control" name="row[slug]" type="text" placeholder="{:__('Slug')}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <textarea id="c-content" data-rule="" class="form-control editor" rows="5" name="row[content][content]" cols="50"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <input id="c-seo_title" data-rule="required" class="form-control" name="row[content][seo_title]" type="text" placeholder="{:__('Seo_title')}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <input id="c-keyword" data-rule="required" class="form-control" name="row[content][keyword]" type="text" placeholder="{:__('Keyword')}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <textarea id="c-description" data-rule="" class="form-control" name="row[content][description]" type="text" rows="5" placeholder="{:__('Description')}"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-sm-offset-1 no-padding">
+                <div class="box box-widget">
+                    <div class="box-header with-border">
+                        <div class="box-title">
+                            <span>{:__('Language')}</span>
+                        </div>
+                        <div class="box-tools">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <select id="c-language" data-rule="required" class="form-control selectpicker" name="row[content][language]" type="text" placeholder="{:__('Language')}">
+                                    {foreach name="site.multi_lang" item="vo"}
+                                    {eq name="key" value=":getDefaultLanguage()"}
+                                    <option value="{$key}" selected="selected">{$vo}</option>
+                                    {/eq}
+                                    {/foreach}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box box-widget">
+                    <div class="box-header with-border">
+                        <div class="box-title">
+                            <span>{:__('Tags')}</span>
+                        </div>
+                        <div class="box-tools">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <input id="c-tag_ids" data-rule="" class="form-control selectpage" data-source="content/tag" data-multiple="true" data-params='{"custom[type]":"blog"}' data-show-field="content['title']" name="row[tag_ids]" type="text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box box-widget">
+                    <div class="box-header with-border">
+                        <div class="box-title">
+                            <span>{:__('Page Setting')}</span>
+                        </div>
+                        <div class="box-tools">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-3">{:__('Category')}:</label>
+                            <div class="col-xs-12 col-sm-9">
+                                <input id="c-category_id" data-rule="required" data-source="site/site_category/selectpage" data-params='{"custom[type]":"blog","isTree":"true"}' class="form-control selectpage" name="row[category_id]" type="text" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-3">{:__('View')}:</label>
+                            <div class="col-xs-12 col-sm-9">
+                                <input id="c-view" class="form-control" name="row[view]" type="number" min="0" step="1" value="0">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {for start="0" end="1"}
+                <div class="box box-widget">
+                    <div class="box-header with-border">
+                        <div class="box-title">
+                            <span>{:__('Image')}</span>
+                        </div>
+                        <div class="box-tools">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <div class="input-group">
+                                    <input id="c-images-{$i}-url" data-rule="required" class="form-control" size="50" name="row[images][{$i}][url]" readonly>
+                                    <div class="input-group-addon no-border no-padding">
+                                        <span><button type="button" id="plupload-image" class="btn btn-danger plupload" data-input-id="c-images-{$i}-url" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-image-{$i}"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
+                                        <span><button type="button" id="fachoose-image" class="btn btn-primary fachoose" data-input-id="c-images-{$i}-url" data-mimetype="image/*" data-multiple="false"><i class="fa fa-list"></i> {:__('Choose')}</button></span>
+                                    </div>
+                                    <span class="msg-box n-right" for="c-images-{$i}-url"></span>
+                                </div>
+                                <ul class="row list-inline plupload-preview" id="p-image-{$i}"></ul>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">{:__('Title')}:</label>
+                            <div class="col-xs-12 col-sm-10">
+                                <input id="c-images-{$i}-title" class="form-control" name="row[images][{$i}][title]" type="text" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">{:__('Alt')}:</label>
+                            <div class="col-xs-12 col-sm-10">
+                                <input id="c-images-{$i}-alt" data-rule="required" class="form-control" name="row[images][{$i}][alt]" type="text" value="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/for}
+            </div>
+            <div class="form-group layer-footer">
+                <label class="control-label col-xs-12 col-sm-2"></label>
+                <div class="col-xs-12">
+                    <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+                    <button id="saveDraft" type="button" class="btn btn-grey btn-embossed">{:__('Save Draft')}</button>
+                    <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,199 @@
+<style type="text/css">
+    .plupload-preview a img {
+        height: auto;
+    }
+    .plupload-preview a:first-child {
+        height: auto;
+    }
+    .plupload-preview li {
+        width: 100%;
+    }
+</style>
+<div class="panel panel-default panel-intro">
+    {:build_heading()}
+
+    <div class="panel-body">
+        <form id="edit-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+            <input id="c-id" class="hidden" name="row[id]" value="{$row.id|htmlentities}">
+            <div class="col-xs-7 no-padding">
+                <div class="box box-widget">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <input id="c-category_id" data-rule="" data-source="site/site_category/selectpage" data-params='{"custom[type]":"product"}' class="form-control selectpage" name="row[category_id]" type="text" value="{$row.category_id|htmlentities}" placeholder="{:__('Category_id')}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <input id="c-product_id" data-rule="" data-source="product/product/index" data-show-field="model" class="form-control selectpage" name="row[product_id]" type="text" value="{$row.product_id|htmlentities}" placeholder="{:__('Product_id')}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <input id="c-title" data-rule="required" class="form-control" name="row[content][title]" type="text" value="{$row.content.title|htmlentities}" placeholder="{:__('Title')} {:__('Using inside the website for user')}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <input id="c-slug" data-rule="required" class="form-control" name="row[slug]" type="text" value="{$row.slug|htmlentities}" placeholder="{:__('Slug')}" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <textarea id="c-content" data-rule="" class="form-control editor" rows="5" name="row[content][content]" cols="50">{$row.content.content|htmlentities}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <input id="c-seo_title" data-rule="required" class="form-control" name="row[content][seo_title]" type="text" value="{$row.content.seo_title|htmlentities}" placeholder="{:__('Seo_title')}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <input id="c-keyword" data-rule="required" class="form-control" name="row[content][keyword]" type="text" value="{$row.content.keyword|htmlentities}" placeholder="{:__('Keyword')}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <textarea id="c-description" data-rule="" class="form-control" name="row[content][description]" type="text" rows="5" value="{$row.content.description|htmlentities}" placeholder="{:__('Description')}"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-offset-1 no-padding">
+                <div class="box box-widget">
+                    <div class="box-header with-border">
+                        <div class="box-title">
+                            <span>{:__('Language')}</span>
+                        </div>
+                        <div class="box-tools">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <select id="c-language" data-rule="required" class="form-control selectpicker" name="row[content][language]" type="text" placeholder="{:__('Language')}">
+                                    {foreach name="site.multi_lang" item="vo" key="key"}
+                                    <option value="{$key}" {eq name="row.content.language" value="key"}checked{/eq}>{$vo}</option>
+                                    {/foreach}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box box-widget">
+                    <div class="box-header with-border">
+                        <div class="box-title">
+                            <span>{:__('Page Info')}</span>
+                        </div>
+                        <div class="box-tools">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <dl>
+                            <dt>{:__('Create Time')}</dt>
+                            <dd>{$row.createtime|date='Y-m-d',###|htmlentities}</dd>
+                            <dt>{:__('Update Time')}</dt>
+                            <dd>{$row.updatetime|date='Y-m-d',###|htmlentities}</dd>
+                            <dt>{:__('Admin')}</dt>
+                            <dd>{$row.admin.nickname|htmlentities}</dd>
+                            <dt>{:__('Post Status')}</dt>
+                            <dd>{$row.post_status_text|htmlentities}</dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="box box-widget">
+                    <div class="box-header with-border">
+                        <div class="box-title">
+                            <span>{:__('Tags')}</span>
+                        </div>
+                        <div class="box-tools">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <input id="c-tag_ids" data-rule="" class="form-control selectpage" data-source="content/tag" data-multiple="true" data-params='{"custom[type]":"productPage"}' data-show-field="content['title']" name="row[tag_ids]" type="text" value="{$row.tag_ids|htmlentities}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box box-widget">
+                    <div class="box-header with-border">
+                        <div class="box-title">
+                            <span>{:__('Page Setting')}</span>
+                        </div>
+                        <div class="box-tools">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-3">{:__('View')}:</label>
+                            <div class="col-xs-12 col-sm-9">
+                                <input id="c-view" data-rule="required" class="form-control" name="row[view]" type="number" min="0" step="1" value="{$row.view|htmlentities}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-3">{:__('Weigh')}:</label>
+                            <div class="col-xs-12 col-sm-9">
+                                <input id="c-weigh" data-rule="required" class="form-control" name="row[weigh]" type="number" min="0" step="1" value="{$row.weigh|htmlentities}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {for start="0" end="config('site.image_number')" }
+                <div class="box box-widget {neq name='$i' value='0'}collapsed-box{/neq}">
+                    <div class="box-header with-border">
+                        <div class="box-title">
+                            <span>{:__('Image')} {$i+1}</span>
+                        </div>
+                        <div class="box-tools">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa {neq name='$i' value='0'}fa-plus{else /}fa-minus{/neq}"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body" {neq name="$i" value="0"}style="display: none;"{/neq}>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <div class="input-group">
+                                    <input id="c-images-{$i}-url" class="form-control" size="50" name="row[images][{$i}][url]" type="text" value="{:empty($row['images'][$i]) ? '':$row['images'][$i]['url']}" readonly>
+                                    <div class="input-group-addon no-border no-padding">
+                                        <span><button type="button" id="plupload-image-{$i}" class="btn btn-danger plupload" data-input-id="c-images-{$i}-url" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-image-{$i}"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
+                                        <span><button type="button" id="fachoose-image-{$i}" class="btn btn-primary fachoose" data-input-id="c-images-{$i}-url" data-mimetype="image/*" data-multiple="false"><i class="fa fa-list"></i> {:__('Choose')}</button></span>
+                                    </div>
+                                    <span class="msg-box n-right" for="c-images-{$i}-url"></span>
+                                </div>
+                                <ul class="row list-inline plupload-preview" id="p-image-{$i}"></ul>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">{:__('Title')}:</label>
+                            <div class="col-xs-12 col-sm-10">
+                                <input id="c-images-{$i}-title" class="form-control" name="row[images][{$i}][title]" type="text" value="{:empty($row['images'][$i]) ? '':$row['images'][$i]['title']}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">{:__('Alt')}:</label>
+                            <div class="col-xs-12 col-sm-10">
+                                <input id="c-images-{$i}-alt" class="form-control" name="row[images][{$i}][alt]" type="text" value="{:empty($row['images'][$i]) ? '':$row['images'][$i]['alt']}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/for}
+            </div>
+            <div class="form-group layer-footer">
+                <label class="control-label col-xs-12 col-sm-2"></label>
+                <div class="col-xs-12 col-sm-8">
+                    <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+                    <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

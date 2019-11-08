@@ -362,3 +362,21 @@ if (!function_exists('hsv2rgb')) {
         ];
     }
 }
+
+if (!function_exists('getDefaultLanguage')) {
+
+    function getDefaultLanguage()
+    {
+        $language = config('site.multi_lang');
+        return key($language);
+    }
+}
+
+
+if (!function_exists('getLanguageUrl')) {
+    function getLanguageUrl()
+    {
+        $lang = request()->param('lang');
+        return $lang && $lang !== getDefaultLanguage() ? '/'.request()->param('lang'):'';
+    }
+}

@@ -2,6 +2,7 @@
 
 namespace app\common\model;
 
+use app\admin\model\site\Content;
 use think\Model;
 
 /**
@@ -19,6 +20,9 @@ class Category extends Model
     protected $append = [
         'type_text',
         'flag_text',
+        'content',
+        'languages',
+        'url'
     ];
 
     protected static function init()
@@ -31,6 +35,18 @@ class Category extends Model
     public function setFlagAttr($value, $data)
     {
         return is_array($value) ? implode(',', $value) : $value;
+    }
+
+
+    public function setSlugAttr($value, $data)
+    {
+        return empty($value) ? str_replace(' ', '-', strtolower($data['name'])) : $value;
+    }
+
+    public function getUrlAttr($value, $data)
+    {
+        $prefix = $data['type'] === 'product' ? '/product-category/' : '/blog-category/';//TODO:待优化
+        return getLanguageUrl().$prefix.$data['slug'].".html";
     }
 
     /**
@@ -83,5 +99,39 @@ class Category extends Model
             }
         })->order('weigh', 'desc')->select())->toArray();
         return $list;
+    }
+
+    public function getContentAttr()
+    {
+        return Content::scope('languageContent', $this->id, 'siteCategory', request()->param('lang'))->find();
+    }
+
+
+    public function getLanguagesAttr ()
+    {
+        return Content::scope('allContent', $this->id, 'siteCategory')->column('language');
+    }
+
+    public static function getChildList($pid)
+    {
+        $list = self::where('pid', $pid)->select();
+        if ($list) {
+            return $list;
+        }
+    }
+
+    public function getAllChildIds($pid)
+    {
+        $ids = [];
+        $child = self::getChildList($pid);
+        if ($child) {
+            $childids = array_column($child, 'id');
+            foreach ($childids as $childid) {
+                $arr = $this->getAllChildIds($childid);
+                $ids = array_merge($ids, $arr);
+            }
+        }
+        $ids[] = $pid;
+        return $ids;
     }
 }

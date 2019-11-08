@@ -1,0 +1,181 @@
+<form id="add-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Location')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <select id="c-location" data-rule="required" class="form-control selectpicker" name="row[location]" type="text">
+                {foreach name="site.widget" item="vo"}
+                <option value="{$key}" {in name="key" value=""}selected{/in}>{$vo}</option>
+                {/foreach}
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Widget_type')}:</label>
+        <div class="col-xs-12 col-sm-8">
+
+            <select  id="c-widget_type" data-rule="required" class="form-control selectpicker" name="row[widget_type]" type="text">
+                <option value="">{:__('Please Select')}</option>
+                {foreach name="widgetTypeList" item="vo"}
+                <option value="{$key}" {in name="key" value=""}selected{/in}>{$vo}</option>
+                {/foreach}
+            </select>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Language')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <select id="c-language" data-rule="required" class="form-control selectpicker" name="row[content][language]" type="text">
+                {foreach name="site.multi_lang" item="vo"}
+                {eq name="key" value=":getDefaultLanguage()"}
+                <option value="{$key}" selected>{$vo}</option>
+                {/eq}
+                {/foreach}
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Weigh')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-weigh" data-rule="" class="form-control" name="row[weigh]" min="0" step="1" type="number" value="0">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Title')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-title" data-rule="" class="form-control" name="row[content][title]" type="text">
+        </div>
+    </div>
+    <div class="form-group hidden">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Text')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <textarea id="c-text-content" data-rule="" class="form-control" name="row[content][content][text]" type="text" rows="5"></textarea>
+        </div>
+    </div>
+    <div class="form-group hidden">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Menu')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <select id="c-menu-type" data-rule="" class="form-control selectpicker" name="row[content][content][menu_type]" type="text">
+                <option value="">{:__('Please Choose')}</option>
+                {foreach name="site.menu" item="vo"}
+                <option value="{$key}">{$vo}</option>
+                {/foreach}
+            </select>
+        </div>
+    </div>
+    <div class="form-group hidden">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Image')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="input-group">
+                <input id="c-image-src" data-rule="" class="form-control" size="50" name="row[content][content][src]" readonly>
+                <div class="input-group-addon no-border no-padding">
+                    <span><button type="button" id="plupload-image" class="btn btn-danger plupload" data-input-id="c-image-src" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-image"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
+                    <span><button type="button" id="fachoose-image" class="btn btn-primary fachoose" data-input-id="c-image-src" data-mimetype="image/*" data-multiple="false"><i class="fa fa-list"></i> {:__('Choose')}</button></span>
+                </div>
+                <span class="msg-box n-right" for="c-image-src"></span>
+            </div>
+            <ul class="row list-inline plupload-preview" id="p-image"></ul>
+        </div>
+    </div>
+    <div class="form-group hidden">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Link')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-image-link" data-rule="" class="form-control" name="row[content][content][link]" type="text">
+        </div>
+    </div>
+    <div class="form-group hidden">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Facebook')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-social_links-facebook" data-rule="" class="form-control" name="row[content][content][facebook]" type="text">
+        </div>
+    </div>
+    <div class="form-group hidden">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Twitter')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-social_links-twitter" data-rule="" class="form-control" name="row[content][content][twitter]" type="text">
+        </div>
+    </div>
+    <div class="form-group hidden">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Linkedin')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-social_links-linkedin" data-rule="" class="form-control" name="row[content][content][linkedin]" type="text">
+        </div>
+    </div>
+    <div class="form-group hidden">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Youtube')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-social_links-youtube" data-rule="" class="form-control" name="row[content][content][youtube]" type="text">
+        </div>
+    </div>
+    <div class="form-group hidden">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Instagram')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-social_links-instagram" data-rule="" class="form-control" name="row[content][content][instagram]" type="text">
+        </div>
+    </div>
+    <div class="form-group hidden">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Address')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-contact_info-address" data-rule="" class="form-control" name="row[content][content][address]" type="text">
+        </div>
+    </div>
+    <div class="form-group hidden">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Tel')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-contact_info-tel" data-rule="" class="form-control" name="row[content][content][tel]" type="text">
+        </div>
+    </div>
+    <div class="form-group hidden">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Fax')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-contact_info-fax" data-rule="" class="form-control" name="row[content][content][fax]" type="text">
+        </div>
+    </div>
+    <div class="form-group hidden">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Contact')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-contact_info-contact" data-rule="" class="form-control" name="row[content][content][contact]" type="text">
+        </div>
+    </div>
+    <div class="form-group hidden">
+        <label class="control-label col-xs-12 col-sm-2">{:__('E-mail')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-contact_info-email" data-rule="" class="form-control" name="row[content][content][email]" type="text">
+        </div>
+    </div>
+    <div class="form-group hidden">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Mobile')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-contact_info-mobile" data-rule="" class="form-control" name="row[content][content][mobile]" type="text">
+        </div>
+    </div>
+    <div class="form-group hidden">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Skype')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-contact_info-skype" data-rule="" class="form-control" name="row[content][content][skype]" type="text">
+        </div>
+    </div>
+    <div class="form-group hidden">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Tag Type')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <select id="c-tags-tag_type" data-rule="" class="form-control selectpicker" name="row[content][content][tag_type]" type="text">
+                <option value="productPage">Product</option>
+                <option value="blog">Blog</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group hidden">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Tag Number')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-tags-num" data-rule="" class="form-control" name="row[content][content][tag_num]" type="number" min="5" max="20" step="1" value="5">
+        </div>
+    </div>
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+</form>

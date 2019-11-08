@@ -1,0 +1,117 @@
+<form id="add-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+    <input id="c-product_id" data-rule="required" class="hidden" name="row[product_id]" value="{$Request.param.product_id|htmlentities}">
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Code')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-code" data-rule="required" class="form-control" name="row[code]" type="text">
+        </div>
+    </div>
+    {foreach name="site.quote_lang" item="vo"}
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__($vo.' Description')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-description-{$vo}" data-rule="required" class="form-control" name="row[adddescription][{$key}][description]" type="text">
+            <span class="msg-box"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__($vo.' Specification')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <textarea id="c-specification-{$vo}" data-rule="required" class="form-control" name="row[adddescription][{$key}][specification]" type="text" rows="5"></textarea>
+            <span class="msg-box"></span>
+        </div>
+    </div>
+    {/foreach}
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Unit')}:</label>
+        <div class="col-xs-12 col-sm-8">
+                        
+            <select  id="c-unit" data-rule="required" class="form-control selectpicker" name="row[unit]">
+                {foreach name="unitList" item="vo"}
+                    <option value="{$key}" {in name="key" value="PC"}selected{/in}>{$vo}</option>
+                {/foreach}
+            </select>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Moq')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-moq" data-rule="required" class="form-control" name="row[moq]" min="1" type="number">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Weight')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-weight" data-rule="required" class="form-control" step="0.001" min="0" name="row[weight]" type="number">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Length')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-length" data-rule="required" class="form-control" step="0.1" min="0" name="row[length]" type="number">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Width')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-width" data-rule="required" class="form-control" step="0.1" min="0" name="row[width]" type="number">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Height')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-height" data-rule="required" class="form-control" step="0.1" min="0" name="row[height]" type="number">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Package')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-package" data-rule="required" class="form-control" name="row[package]" type="text">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Pweight')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-pweight" data-rule="required" class="form-control" step="0.001" min="0" name="row[pweight]" type="number">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Plength')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-plength" data-rule="required" class="form-control" step="0.1" min="0" name="row[plength]" type="number">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Pwidth')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-pwidth" data-rule="required" class="form-control" step="0.1" min="0" name="row[pwidth]" type="number">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Pheight')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-pheight" data-rule="required" class="form-control" step="0.1" min="0" name="row[pheight]" type="number">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Cost')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-cost" data-rule="required" class="form-control" step="0.01" min="0" name="row[cost]" type="number">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Remark')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <textarea id="c-remark" data-rule="" class="form-control " rows="5" name="row[remark]" cols="50"></textarea>
+        </div>
+    </div>
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+</form>

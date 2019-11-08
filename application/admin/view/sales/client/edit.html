@@ -1,0 +1,297 @@
+<div class="panel panel-default panel-intro">
+    {:build_heading()}
+
+    <div class="panel-body">
+        <form id="edit-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+            <div class="col-xs-12 col-sm-6 no-padding">
+                <div class="box box-widget">
+                    <div class="box-body">
+                        <input id="c-id" class="hidden" name="row[id]" value="{$row.id|htmlentities}">
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">{:__('Logo')}:</label>
+                            <div class="col-xs-12 col-sm-10">
+                                <div class="input-group">
+                                    <input id="c-logo" class="form-control" size="50" name="row[logo]" type="text" value="{$row.logo|htmlentities}">
+                                    <div class="input-group-addon no-border no-padding">
+                                        <span><button type="button" id="plupload-logo" class="btn btn-danger plupload" data-input-id="c-logo" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-logo"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
+                                        <span><button type="button" id="fachoose-logo" class="btn btn-primary fachoose" data-input-id="c-logo" data-mimetype="image/*" data-multiple="false"><i class="fa fa-list"></i> {:__('Choose')}</button></span>
+                                    </div>
+                                    <span class="msg-box n-right" for="c-logo"></span>
+                                </div>
+                                <ul class="row list-inline plupload-preview" id="p-logo"></ul>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">{:__('Name')}:</label>
+                            <div class="col-xs-12 col-sm-10">
+                                <input id="c-name" data-rule="required" class="form-control" name="row[name]" type="text" value="{$row.name|htmlentities}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">{:__('Short_name')}:</label>
+                            <div class="col-xs-12 col-sm-10">
+                                <input id="c-short_name" data-rule="required" class="form-control" name="row[short_name]" type="text" value="{$row.short_name|htmlentities}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">{:__('Category_id')}:</label>
+                            <div class="col-xs-12 col-sm-10">
+                                <input id="c-category_id" data-rule="required" data-source="category/selectpage" data-params='{"custom[type]":"source","isTree":"true"}' class="form-control selectpage" name="row[category_id]" type="text" value="{$row.category_id|htmlentities}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">{:__('Type')}:</label>
+                            <div class="col-xs-12 col-sm-10">
+
+                                <select  id="c-type" data-rule="required" class="form-control selectpicker" name="row[type]">
+                                    {foreach name="typeList" item="vo"}
+                                        <option value="{$key}" {in name="key" value="$row.type"}selected{/in}>{$vo}</option>
+                                    {/foreach}
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">{:__('Star')}:</label>
+                            <div class="col-xs-12 col-sm-10">
+
+                                <select  id="c-star" data-rule="required" class="form-control selectpicker" name="row[star]">
+                                    {foreach name="starList" item="vo"}
+                                        <option value="{$key}" {in name="key" value="$row.star"}selected{/in}>{$vo}</option>
+                                    {/foreach}
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">{:__('Country_code')}:</label>
+                            <div class="col-xs-12 col-sm-10">
+                                <input id="c-country_code" data-rule="required" class="form-control selectpage" data-source="location/index" data-key-field="code" data-show-field="country_name" data-search-field="name,name_cn" data-and-or="or" data-order-by="name" name="row[country_code]" type="text" value="{$row.country_code|htmlentities}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">{:__('City_code')}:</label>
+                            <div class="col-xs-12 col-sm-10">
+                                <input id="c-city_code" data-rule="" class="form-control selectpage" data-source="location/index" data-key-field="code" data-show-field="city_name" data-search-field="name,name_cn" data-and-or="or" data-order-by="name" name="row[city_code]" type="text" value="{$row.city_code|htmlentities}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">{:__('Vat')}:</label>
+                            <div class="col-xs-12 col-sm-10">
+                                <input id="c-vat" data-rule="" class="form-control" name="row[vat]" type="text" value="{$row.vat|htmlentities}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">{:__('Website')}:</label>
+                            <div class="col-xs-12 col-sm-10">
+                                <input id="c-website" data-rule="" class="form-control" name="row[website]" type="text" value="{$row.website|htmlentities}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">{:__('Tel')}:</label>
+                            <div class="col-xs-12 col-sm-10">
+                                <input id="c-tel" data-rule="" class="form-control" name="row[tel]" type="text" value="{$row.tel|htmlentities}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">{:__('Fax')}:</label>
+                            <div class="col-xs-12 col-sm-10">
+                                <input id="c-fax" data-rule="" class="form-control" name="row[fax]" type="text" value="{$row.fax|htmlentities}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">{:__('Address')}:</label>
+                            <div class="col-xs-12 col-sm-10">
+                                <input id="c-address" data-rule="" class="form-control" name="row[address]" type="text" value="{$row.address|htmlentities}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">{:__('Contact_id')}:</label>
+                            <div class="col-xs-12 col-sm-10">
+                                <input id="c-contact_id" data-rule="required" data-source="sales/contact/index" class="form-control selectpage" name="row[contact_id]" type="text" value="{$row.contact_id|htmlentities}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">{:__('Remark')}:</label>
+                            <div class="col-xs-12 col-sm-10">
+                                <textarea id="c-remark" data-rule="" class="form-control " rows="5" name="row[remark]" cols="50">{$row.remark|htmlentities}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-12 col-sm-2">{:__('Status')}:</label>
+                            <div class="col-xs-12 col-sm-10">
+
+                                <div class="radio">
+                                {foreach name="statusList" item="vo"}
+                                <label for="row[status]-{$key}"><input id="row[status]-{$key}" name="row[status]" type="radio" value="{$key}" {in name="key" value="$row.status"}checked{/in} /> {$vo}</label>
+                                {/foreach}
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-5 col-sm-offset-1 no-padding">
+                <div class="box box-widget">
+                    <div class="box-header with-border">
+                        <div class="box-title">
+                            <span>Contact</span>
+                        </div>
+                        <div class="box-tools">
+                            <button id="addForm" type="button" class="btn btn-box-tool"><i class="fa fa-plus"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <span class="msg-box" for=".box-body"></span>
+                        {foreach name="row['contacts']" item="vo"}
+                        <div class="attachment-block contactForm">
+                            <input class="hidden" name="row[contact][{$key}][id]" value="{$vo.id|htmlentities}">
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-3">{:__('Contact Name')}:</label>
+                                <div class="col-xs-12 col-sm-9">
+                                    <input data-rule="length[~64]" class="form-control" name="row[contact][{$key}][name]" type="text" value="{$vo.name|htmlentities}">
+                                    <span class="msg-box"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-3">{:__('Appellation')}:</label>
+                                <div class="col-xs-12 col-sm-9">
+                                    <input data-rule="required;length[~32]" class="form-control" name="row[contact][{$key}][appellation]" type="text" value="{$vo.appellation|htmlentities}">
+                                    <span class="msg-box"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-3">{:__('Job Title')}:</label>
+                                <div class="col-xs-12 col-sm-9">
+                                    <input data-rule="length[~32]" class="form-control" name="row[contact][{$key}][title]" type="text" value="{$vo.title|htmlentities}">
+                                    <span class="msg-box"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-3">{:__('Email')}:</label>
+                                <div class="col-xs-12 col-sm-9">
+                                    <input data-rule="required;email" class="form-control" name="row[contact][{$key}][email]" type="text"  value="{$vo.email|htmlentities}">
+                                    <span class="msg-box"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-3">{:__('Cc_email')}:</label>
+                                <div class="col-xs-12 col-sm-9">
+                                    <input data-rule="email" class="form-control" name="row[contact][{$key}][cc_email]" type="text" value="{$vo.cc_email|htmlentities}">
+                                    <span class="msg-box"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-3">{:__('Linkedin')}:</label>
+                                <div class="col-xs-12 col-sm-9">
+                                    <input data-rule="length[~128]" class="form-control" name="row[contact][{$key}][linkedin]" type="text" value="{$vo.linkedin|htmlentities}">
+                                    <span class="msg-box"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-3">{:__('Tel')}:</label>
+                                <div class="col-xs-12 col-sm-9">
+                                    <input data-rule="length[~32]" class="form-control" name="row[contact][{$key}][tel]" type="text" value="{$vo.tel|htmlentities}">
+                                    <span class="msg-box"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-3">{:__('Mobile')}:</label>
+                                <div class="col-xs-12 col-sm-9">
+                                    <input data-rule="length[~64];mobile" class="form-control" name="row[contact][{$key}][mobile]" type="text" value="{$vo.mobile|htmlentities}">
+                                    <span class="msg-box"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-xs-12 col-sm-3">{:__('Remark')}:</label>
+                                <div class="col-xs-12 col-sm-9">
+                                    <textarea class="form-control " rows="5" name="row[contact][{$key}][remark]" cols="50">{$vo.remark|htmlentities}</textarea>
+                                    <span class="msg-box"></span>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-block btn-danger delForm">{:__('Remove')}</button>
+                        </div>
+                        {/foreach}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group layer-footer">
+                <label class="control-label col-xs-12 col-sm-2"></label>
+                <div class="col-xs-12">
+                    <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+                    <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/html" id="contactFormTemplate">
+    <div class="attachment-block contactForm">
+        <div class="form-group">
+            <label class="control-label col-xs-12 col-sm-3">{:__('Contact Name')}:</label>
+            <div class="col-xs-12 col-sm-9">
+                <input data-rule="length[~64]" class="form-control" name="row[addcontact][<%=index%>][name]" type="text">
+                <span class="msg-box"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-12 col-sm-3">{:__('Appellation')}:</label>
+            <div class="col-xs-12 col-sm-9">
+                <input data-rule="required;length[~32]" class="form-control" name="row[addcontact][<%=index%>][appellation]" type="text">
+                <span class="msg-box"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-12 col-sm-3">{:__('Title')}:</label>
+            <div class="col-xs-12 col-sm-9">
+                <input data-rule="length[~32]" class="form-control" name="row[addcontact][<%=index%>][title]" type="text">
+                <span class="msg-box"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-12 col-sm-3">{:__('Email')}:</label>
+            <div class="col-xs-12 col-sm-9">
+                <input data-rule="required;email" class="form-control" name="row[addcontact][<%=index%>][email]" type="text">
+                <span class="msg-box"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-12 col-sm-3">{:__('Cc_email')}:</label>
+            <div class="col-xs-12 col-sm-9">
+                <input data-rule="email" class="form-control" name="row[addcontact][<%=index%>][cc_email]" type="text">
+                <span class="msg-box"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-12 col-sm-3">{:__('Linkedin')}:</label>
+            <div class="col-xs-12 col-sm-9">
+                <input data-rule="length[~128]" class="form-control" name="row[addcontact][<%=index%>][linkedin]" type="text">
+                <span class="msg-box"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-12 col-sm-3">{:__('Tel')}:</label>
+            <div class="col-xs-12 col-sm-9">
+                <input data-rule="length[~32]" class="form-control" name="row[addcontact][<%=index%>][tel]" type="text">
+                <span class="msg-box"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-12 col-sm-3">{:__('Mobile')}:</label>
+            <div class="col-xs-12 col-sm-9">
+                <input data-rule="length[~64];mobile" class="form-control" name="row[addcontact][<%=index%>][mobile]" type="text">
+                <span class="msg-box"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-12 col-sm-3">{:__('Remark')}:</label>
+            <div class="col-xs-12 col-sm-9">
+                <textarea class="form-control " rows="5" name="row[addcontact][<%=index%>][remark]" cols="50"></textarea>
+                <span class="msg-box"></span>
+            </div>
+        </div>
+        <button type="button" class="btn btn-block btn-danger delForm">{:__('Remove')}</button>
+    </div>
+</script>

@@ -17,6 +17,7 @@ return array (
   array (
     'product' => 'Product',
     'blog' => 'Blog',
+    'source' => 'Source',
   ),
   'configgroup' => 
   array (
@@ -25,7 +26,10 @@ return array (
     'website' => 'Website',
     'email' => 'Email',
     'dictionary' => 'Dictionary',
-    'user' => 'User',
+    'product_category' => 'Product Category',
+    'blog_category' => 'Blog Category',
+    'product_page' => 'Product Page',
+    'blog_page' => 'Blog Page',
   ),
   'mail_type' => '1',
   'mail_smtp_host' => 'smtp.qq.com',
@@ -48,5 +52,28 @@ return array (
   array (
     'en' => 'English',
     'zh' => 'Chinese',
+  ),
+  'currency' => 
+  array (
+    'USD' => 'USD',
+    'CNY' => 'CNY',
+  ),
+  'quote_lang' => 
+  array (
+    'en' => 'English',
+    'zh' => 'Chinese',
+  ),
+  'menu' => 
+  array (
+    'main' => 'Main',
+    'product_sidebar' => 'Product Sidebar',
+  ),
+  'widget' => 
+  array (
+    'product_sidebar' => 'Product Sidebar',
+    'blog_sidebar' => 'Blog Sidebar',
+    'footer1' => 'Footer 1',
+    'footer2' => 'Footer 3',
+    'footer4' => 'Footer 4',
   ),
 );
