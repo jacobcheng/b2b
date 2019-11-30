@@ -380,3 +380,10 @@ if (!function_exists('getLanguageUrl')) {
         return $lang && $lang !== getDefaultLanguage() ? '/'.request()->param('lang'):'';
     }
 }
+
+if (!function_exists( 'getDescription' )) {
+    function getDescription($id, $lang)
+    {
+        return model('app\admin\model\product\MultiDesc')->scope('multiDesc', $id, $lang)->value('description');
+    }
+}

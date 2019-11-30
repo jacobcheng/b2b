@@ -76,4 +76,13 @@ return array (
     'footer2' => 'Footer 3',
     'footer4' => 'Footer 4',
   ),
+  'service' => 
+  array (
+    'molding_fee' => 'Molding Fee',
+    'design_fee' => 'Design Fee',
+  ),
+  'process' => 
+  array (
+    'proint_logo' => 'Print Logo',
+  ),
 );

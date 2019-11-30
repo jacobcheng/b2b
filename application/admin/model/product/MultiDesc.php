@@ -22,8 +22,8 @@ class MultiDesc extends Model
 
 
 
-    public function scopeMultiDesc ($query, $id)
+    public function scopeMultiDesc ($query, $id, $lang = '')
     {
-        $query->where(['desc_type' => getController(), 'desc_id' => $id]);
+        $query->where(['desc_type' => getController(), 'desc_id' => $id, 'lang' => '*']);
     }
 }

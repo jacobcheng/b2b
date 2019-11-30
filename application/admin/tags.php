@@ -34,6 +34,38 @@ return [
         'app\\admin\\behavior\\AddDescription'
     ],
 
+
+    'before_write_quotation' => [
+        'app\\admin\\behavior\\DefaultClientInfo'
+    ],
+    'before_write_order' => [
+        'app\\admin\\behavior\\DefaultClientInfo'
+    ],
+    'after_write_quotation' => [
+        'app\\admin\\behavior\\UpdateItems'
+    ],
+    'before_copy_quotation' => [
+        'app\\admin\\behavior\\PrepareCopy'
+    ],
+    'after_copy_quotation' => [
+        'app\\admin\\behavior\\CopyQuotationItem'
+    ],
+    'before_write_quotation_item' => [
+        'app\\admin\\behavior\\SaveItem',
+        'app\\admin\\behavior\\CalculateQuotationPrice'
+    ],
+    'before_write_order_item' => [
+        'app\\admin\\behavior\\SaveItem',
+        'app\\admin\\behavior\\CalculateOrderPrice'
+    ],
+    'before_placeorder' => [
+        'app\\admin\\behavior\\PlaceOrder'
+    ],
+    'after_placeorder' => [
+        'app\\admin\\behavior\\PlaceOrderItems'
+    ],
+
+
     'after_write_page' => [
         'app\\admin\\behavior\\MultiLanguageContent'
     ],

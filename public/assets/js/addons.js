@@ -1,6 +1,16 @@
 define([], function () {
     require.config({
     paths: {
+        'fullcalendar': '../addons/calendar/fullcalendar/dist/fullcalendar',
+        'fullcalendar-lang': '../addons/calendar/fullcalendar/dist/locale/zh-cn',
+    },
+    // shim依赖配置
+    shim: {
+        'fullcalendar-lang': ['fullcalendar']
+    }
+});
+require.config({
+    paths: {
         'nkeditor': '../addons/nkeditor/js/customplugin',
         'nkeditor-core': '../addons/nkeditor/nkeditor.min',
         'nkeditor-lang': '../addons/nkeditor/lang/zh-CN',
